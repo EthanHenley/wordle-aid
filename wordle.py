@@ -2,7 +2,7 @@ from nltk.corpus import words
 from nltk import edit_distance
 from random import choice
 
-corpus = [w.lower() for w in words.words() if len(w)==5]
+corpus = list(set([w.lower() for w in words.words() if len(w)==5]))
 alphabet = [chr(i) for i in range(ord('a'), ord('z')+1)]
 required = []
 win = False
@@ -67,7 +67,10 @@ for i in range(6):
 	optimalstring = ''.join([max(alphabet, key=[w[i] for w in corpus].count) for i in range(5)]).upper()
 	print('Optimal placement:',optimalstring)
 	optimallevenshtein = lambda w: edit_distance(w.lower(), optimalstring.lower())#, True)
+	maxuniques = max([len(set(wi)) for wi in corpus])
+	subcorpus = [w for w in corpus if len(set(w))==maxuniques]
 	print('Recommended word:',min(corpus, key=optimallevenshtein).upper())
+	print('Most useful word:',min(subcorpus, key=optimallevenshtein).upper())
 
 	if len(corpus) < 50:
 		print('Remaining wordspace:')
