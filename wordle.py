@@ -7,7 +7,7 @@ alphabet = [chr(i) for i in range(ord('a'), ord('z')+1)]
 required = []
 win = False
 live = False
-convenience = {2:'1',1:'0',0:'n'}
+convenience = {2:'1',1:'0',0:'N'}
 
 # set mode
 wtype = ''
@@ -39,7 +39,7 @@ for i in range(6):
 			instr = 'Outcome?: '
 		outcome = input(instr).lower()
 	else: # simulated version with fixed double letter handling
-		outcome = ['n'] * 5
+		outcome = ['N'] * 5
 		secret_letters = list(secret)
 		
 		# First pass: mark correct positions (green)
@@ -50,7 +50,7 @@ for i in range(6):
 		
 		# Second pass: mark wrong positions (yellow)
 		for idx, cg in enumerate(guess):
-			if outcome[idx] == 'n' and cg in secret_letters:
+			if outcome[idx] == 'N' and cg in secret_letters:
 				outcome[idx] = '0'
 				secret_letters[secret_letters.index(cg)] = None  # mark as used
 		
@@ -65,7 +65,7 @@ for i in range(6):
 		
 	# trim possibilities
 	for ig, (cg, og) in enumerate(zip(guess, outcome)):
-		if og == 'n': # letter not in wordle
+		if og == 'N': # letter not in wordle
 			if cg not in required:
 				corpus = [w for w in corpus if cg not in w]
 		elif og == '0': # letter elsewhere in wordle
