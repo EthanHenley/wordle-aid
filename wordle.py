@@ -56,7 +56,7 @@ for i in range(6):
 		
 		outcome = ''.join(outcome)
 		print('Outcome:',outcome)
-		outcome = outcome.lower()
+		outcome = outcome.upper()
 		
 	if outcome=='11111':
 			print('Congratulations! Score:',i+1)
