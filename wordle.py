@@ -7,7 +7,7 @@ alphabet = [chr(i) for i in range(ord('a'), ord('z')+1)]
 required = []
 win = False
 live = False
-convenience = {2:'1',1:'0',0:'N'}
+convenience = {2:'1',1:'0',0:'n'}
 
 # set mode
 wtype = ''
@@ -38,12 +38,26 @@ for i in range(6):
 		else:
 			instr = 'Outcome?: '
 		outcome = input(instr).lower()
-	else: # simulated, slightly broken version
-		outcome = ''
-		for (cga, sga) in zip(guess, secret):
-			outcome += convenience[int((cga==sga)+(cga in secret))] # slight error with how this handles double letters
+	else: # simulated version with fixed double letter handling
+		outcome = ['n'] * 5
+		secret_letters = list(secret)
+		
+		# First pass: mark correct positions (green)
+		for idx, (cg, sg) in enumerate(zip(guess, secret)):
+			if cg == sg:
+				outcome[idx] = '1'
+				secret_letters[idx] = None  # mark as used
+		
+		# Second pass: mark wrong positions (yellow)
+		for idx, cg in enumerate(guess):
+			if outcome[idx] == 'n' and cg in secret_letters:
+				outcome[idx] = '0'
+				secret_letters[secret_letters.index(cg)] = None  # mark as used
+		
+		outcome = ''.join(outcome)
 		print('Outcome:',outcome)
 		outcome = outcome.lower()
+		
 	if outcome=='11111':
 			print('Congratulations! Score:',i+1)
 			win = True
