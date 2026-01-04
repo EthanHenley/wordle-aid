@@ -43,16 +43,16 @@ while repeat:
 	for i in range(6):
 		# read guess, outcome
 		if i==0:
-			instr = 'Guess? F{EARTH}: '
+			instr = 'Guess? F{EARTH}:   '
 		else:
-			instr = 'Guess?: '
+			instr = 'Guess?:            '
 		guess = input(instr).lower()
 
 		if live: # only input outcome codes if playing live game
 			if i==0:
 				instr = 'Outcome? F{N100N}: '
 			else:
-				instr = 'Outcome?: '
+				instr = 'Outcome?:          '
 			outcome = input(instr).upper()
 		else: # simulated version with fixed double letter handling
 			outcome = ['N'] * 5
@@ -71,7 +71,7 @@ while repeat:
 					secret_letters[secret_letters.index(cg)] = None  # mark as used
 			
 			outcome = ''.join(outcome)
-			print('Outcome:',outcome)
+			print('Outcome:          ',outcome)
 			outcome = outcome.upper()
 			
 		if outcome=='11111':
@@ -99,8 +99,8 @@ while repeat:
 		optimallevenshtein = lambda w: edit_distance(w.lower(), optimalstring.lower())#, True)
 		maxuniques = max([len(set(wi)) for wi in corpus])
 		subcorpus = [w for w in corpus if len(set(w))==maxuniques]
-		print('Recommended word:',min(corpus, key=optimallevenshtein).upper())
-		print('Most useful word:',min(subcorpus, key=optimallevenshtein).upper())
+		print('Recommended word: ',min(corpus, key=optimallevenshtein).upper())
+		print('Most useful word: ',min(subcorpus, key=optimallevenshtein).upper())
 
 		if len(corpus) < 50:
 			print('Remaining wordspace:')
