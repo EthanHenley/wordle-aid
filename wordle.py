@@ -4,7 +4,7 @@ from nltk import edit_distance
 from random import choice
 
 # Load corpus with caching
-corpus_file = 'wordle_corpus.pkl'
+corpus_file = 'cache/wordle_corpus.pkl'
 
 if os.path.exists(corpus_file):
     with open(corpus_file, 'rb') as f:
