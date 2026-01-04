@@ -37,7 +37,7 @@ for i in range(6):
 			instr = 'Outcome? F{N100N}: '
 		else:
 			instr = 'Outcome?: '
-		outcome = input(instr).lower()
+		outcome = input(instr).upper()
 	else: # simulated version with fixed double letter handling
 		outcome = ['N'] * 5
 		secret_letters = list(secret)
