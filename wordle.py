@@ -1,8 +1,20 @@
-from nltk.corpus import words
+import pickle
+import os
 from nltk import edit_distance
 from random import choice
 
-corpus = list(set([w.lower() for w in words.words() if len(w)==5]))
+# Load corpus with caching
+corpus_file = 'cache/wordle_corpus.pkl'
+
+if os.path.exists(corpus_file):
+    with open(corpus_file, 'rb') as f:
+        corpus = pickle.load(f)
+else:
+    from nltk.corpus import words
+    corpus = list(set([w.lower() for w in words.words() if len(w)==5]))
+    with open(corpus_file, 'wb') as f:
+        pickle.dump(corpus, f)
+
 alphabet = [chr(i) for i in range(ord('a'), ord('z')+1)]
 required = []
 win = False
