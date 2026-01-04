@@ -5,4 +5,4 @@ Format results as:
 - "0" for yellow
 - "N" for black/white/null
 
-Currently overly permissive of certain repeating letter structures, and Levenshtein maxing is misguiding first-come-first-serve.
+Current Levenshtein maxing is misguiding first-come-first-serve.

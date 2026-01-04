@@ -38,12 +38,26 @@ for i in range(6):
 		else:
 			instr = 'Outcome?: '
 		outcome = input(instr).lower()
-	else: # simulated, slightly broken version
-		outcome = ''
-		for (cga, sga) in zip(guess, secret):
-			outcome += convenience[int((cga==sga)+(cga in secret))] # slight error with how this handles double letters
+	else: # simulated version with fixed double letter handling
+		outcome = ['N'] * 5
+		secret_letters = list(secret)
+		
+		# First pass: mark correct positions (green)
+		for idx, (cg, sg) in enumerate(zip(guess, secret)):
+			if cg == sg:
+				outcome[idx] = '1'
+				secret_letters[idx] = None  # mark as used
+		
+		# Second pass: mark wrong positions (yellow)
+		for idx, cg in enumerate(guess):
+			if outcome[idx] == 'N' and cg in secret_letters:
+				outcome[idx] = '0'
+				secret_letters[secret_letters.index(cg)] = None  # mark as used
+		
+		outcome = ''.join(outcome)
 		print('Outcome:',outcome)
-		outcome = outcome.lower()
+		outcome = outcome.upper()
+		
 	if outcome=='11111':
 			print('Congratulations! Score:',i+1)
 			win = True
@@ -51,7 +65,7 @@ for i in range(6):
 		
 	# trim possibilities
 	for ig, (cg, og) in enumerate(zip(guess, outcome)):
-		if og == 'n': # letter not in wordle
+		if og == 'N': # letter not in wordle
 			if cg not in required:
 				corpus = [w for w in corpus if cg not in w]
 		elif og == '0': # letter elsewhere in wordle
